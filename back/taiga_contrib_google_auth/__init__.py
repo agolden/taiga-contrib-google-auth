@@ -16,4 +16,4 @@
 
 __version__ = (0, 0, 3)
 
-default_app_config = "taiga_contrib_github_auth.apps.TaigaContribGithubAuthAppConfig"
+default_app_config = "taiga_contrib_google_auth.apps.TaigaContribGoogleAuthAppConfig"

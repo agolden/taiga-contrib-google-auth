@@ -21,10 +21,10 @@ from taiga.auth.services import register_auth_plugin
 from . import services
 
 
-class TaigaContribGithubAuthAppConfig(AppConfig):
-    name = "taiga_contrib_github_auth"
-    verbose_name = "Taiga contrib github auth App Config"
+class TaigaContribGoogleAuthAppConfig(AppConfig):
+    name = "taiga_contrib_google_auth"
+    verbose_name = "Taiga contrib google auth App Config"
 
     def ready(self):
-        register_auth_plugin("github", services.github_login_func)
+        register_auth_plugin("google", services.google_login_func)
 

@@ -37,8 +37,8 @@ class GitHubApiError(ConnectorBaseException):
 CLIENT_ID = getattr(settings, "GITHUB_API_CLIENT_ID", None)
 CLIENT_SECRET = getattr(settings, "GITHUB_API_CLIENT_SECRET", None)
 
-URL = getattr(settings, "GITHUB_URL", "https://github.com/")
-API_URL = getattr(settings, "GITHUB_API_URL",  "https://api.github.com/")
+URL = getattr(settings, "GITHUB_URL", "https://google.com/")
+API_URL = getattr(settings, "GITHUB_API_URL",  "https://api.google.com/")
 API_RESOURCES_URLS = {
     "login": {
         "authorize": "login/oauth/authorize",
@@ -110,10 +110,10 @@ def login(access_code:str, client_id:str=CLIENT_ID, client_secret:str=CLIENT_SEC
           headers:dict=HEADERS):
     """
     Get access_token fron an user authorized code, the client id and the client secret key.
-    (See https://developer.github.com/v3/oauth/#web-application-flow).
+    (See https://developer.google.com/v3/oauth/#web-application-flow).
     """
     if not CLIENT_ID or not CLIENT_SECRET:
-        raise GitHubApiError({"error_message": _("Login with github account is disabled. Contact "
+        raise GitHubApiError({"error_message": _("Login with google account is disabled. Contact "
                                                      "with the sysadmins. Maybe they're snoozing in a "
                                                      "secret hideout of the data center.")})
 
@@ -129,7 +129,7 @@ def login(access_code:str, client_id:str=CLIENT_ID, client_secret:str=CLIENT_SEC
 def get_user_profile(headers:dict=HEADERS):
     """
     Get authenticated user info.
-    (See https://developer.github.com/v3/users/#get-the-authenticated-user).
+    (See https://developer.google.com/v3/users/#get-the-authenticated-user).
     """
     url = _build_url("user", "profile")
     data = _get(url, headers=headers)
@@ -142,7 +142,7 @@ def get_user_profile(headers:dict=HEADERS):
 def get_user_emails(headers:dict=HEADERS) -> list:
     """
     Get a list with all emails of the authenticated user.
-    (See https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user).
+    (See https://developer.google.com/v3/users/emails/#list-email-addresses-for-a-user).
     """
     url = _build_url("user", "emails")
     data = _get(url, headers=headers)
@@ -156,7 +156,7 @@ def get_user_emails(headers:dict=HEADERS) -> list:
 
 def me(access_code:str) -> tuple:
     """
-    Connect to a github account and get all personal info (profile and the primary email).
+    Connect to a google account and get all personal info (profile and the primary email).
     """
     auth_info = login(access_code)
 
