@@ -50,6 +50,8 @@ Include in your dist/js/conf.json in the contribPlugins list the value `"/js/goo
 Running tests
 -------------
 
+3/10/15: PLEASE NOTE: These tests were just copied from the github plugin and are not yet operational.  They will be updated shortly.
+
 We only have backend tests, you have to add your taiga-back directory to the
 PYTHONPATH environment variable, and run py.test, for example:
 
