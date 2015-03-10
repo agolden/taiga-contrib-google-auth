@@ -65,7 +65,7 @@
       loginWithGoogleAccount();
       $el.on("click", ".button-auth", function(event) {
         var redirectToUri, url;
-        redirectToUri = $location.absUrl();
+        redirectToUri = $location.url($location.path()).absUrl();
         url = "" + AUTH_URL + "?client_id=" + clientId + "&redirect_uri=" + redirectToUri + "&state=google&scope=openid%20email&response_type=code";
         return $window.location.href = url;
       });
