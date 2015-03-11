@@ -22,15 +22,10 @@ from taiga_contrib_google_auth import connector as google
 
 
 def test_url_builder():
-    assert (google._build_url("login", "authorize") ==
-            "https://accounts.google.com/o/oauth2/auth")
     assert (google._build_url("login","access-token") ==
             "https://www.googleapis.com/oauth2/v3/token")
     assert (google._build_url("user", "profile") ==
-            "https://api.google.com/user")
-    assert (google._build_url("user", "emails") ==
-            "https://api.google.com/user/emails")
-
+            "https://www.googleapis.com/plus/v1/people/me")
 
 def test_login_without_settings_params():
     with pytest.raises(google.GoogleApiError) as e, \

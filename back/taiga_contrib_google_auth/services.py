@@ -16,14 +16,20 @@
 
 from django.db import transaction as tx
 from django.apps import apps
+from django.conf import settings
 
 from taiga.base.utils.slug import slugify_uniquely
 from taiga.auth.services import send_register_email
 from taiga.auth.services import make_auth_response_data, get_membership_by_token
 from taiga.auth.signals import user_registered as user_registered_signal
+from taiga.base.connectors.exceptions import ConnectorBaseException
 
 from . import connector
 
+class GoogleApiError(ConnectorBaseException):
+    pass
+
+RESTRICT_LOGIN = getattr(settings, "GOOGLE_RESTRICT_LOGIN", None)
 
 @tx.atomic
 def google_register(username:str, email:str, full_name:str, google_id:int, bio:str, token:str=None):
@@ -67,12 +73,14 @@ def google_register(username:str, email:str, full_name:str, google_id:int, bio:s
     return user
 
 
-def google_login_func(request):
+def google_login_func(request, restrict_login:str=RESTRICT_LOGIN):
     code = request.DATA.get('code', None)
     token = request.DATA.get('token', None)
 
     user_info = connector.me(code)
-    
+    if RESTRICT_LOGIN != None and user_info.email.split("@")[1] != restrict_login:
+        raise GoogleApiError({"error_message": ("Login with this Google account is disabled.")})
+
     user = google_register(username=user_info.username,
                            email=user_info.email,
                            full_name=user_info.full_name,

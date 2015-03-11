@@ -38,16 +38,13 @@ CLIENT_ID = getattr(settings, "GOOGLE_API_CLIENT_ID", None)
 CLIENT_SECRET = getattr(settings, "GOOGLE_API_CLIENT_SECRET", None)
 REDIRECT_URI = getattr(settings, "GOOGLE_API_REDIRECT_URI", None)
 
-URL = getattr(settings, "GOOGLE_URL", "https://accounts.google.com/")
-API_URL = getattr(settings, "GOOGLE_API_URL",  "https://www.googleapis.com/")
+URL = getattr(settings, "GOOGLE_API_URL",  "https://www.googleapis.com/")
 API_RESOURCES_URLS = {
     "login": {
-        "authorize": "o/oauth2/auth",
         "access-token": "oauth2/v3/token"
     },
     "user": {
-        "profile": "plus/v1/people/me",
-        "emails": "user/emails"
+        "profile": "plus/v1/people/me"
     }
 }
 
@@ -74,7 +71,7 @@ def _build_url(*args, **kwargs) -> str:
     if kwargs:
         resource_url = resource_url.format(**kwargs)
 
-    return urljoin(API_URL, resource_url)
+    return urljoin(URL, resource_url)
 
 
 def _get(url:str, headers:dict) -> dict:
